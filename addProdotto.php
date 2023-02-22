@@ -8,14 +8,13 @@ if(!$conn){
     $nome=$_POST["nome"];
     $des=$_POST["des"];
     $costo=$_POST["costo"];
-    $sql= "insert into scuola values('$nome', '$des', $costo)";
-    //echo $sql;
+    $sql= "insert into Prodotto (nome,descrizione,costo)values('$nome', '$des', $costo)";
     $query_run=mysqli_query($conn,$sql);
     if($query_run){
         echo "inserimento riuscito";
         exit(0);
     }else{
-        echo "impossibile aggiungere la scuola $sql";
+        echo "impossibile aggiungere il ptodotto $sql";
     }
 };
 ?>
