@@ -3,37 +3,22 @@ include("lib/connectDB.php");
 include("conf/confDB.php");
 $conn=connectDB($hostname, $username, $password, $DBname);
 if(!$conn){
-    echo"immpossibile connettersi";
+    echo "impossibile connettersi";
 }else{
-    if($costoMin=null &&$costoMax=null&&$nome=null){
-        $sql= " select*from Prodotto ";
-        $query_run=mysqli_query($conn,$sql);
-        $numRows=mysqli_num_rows($query_run);
-        if ($numRows> 0) {
-            echo "<table>
-            <caption>
-                    <p>Tutti prodotti</p>
-            </caption>
-            <thead>
-            <tr><th>id </th> <th>nome</th><th>descrizione</th><th>costo</th></tr>
-            </thead>
-            </table>"
-            while($row = mysqli_fetch_assoc($query_run)) {
-               $str "<tr><td>id: "$row["id"]"/td><td>nome: "$row["nome"]"</td><td>descrizione: "$row["descrizione"]"</td><td>costo: "$row["costo"]"</td></tr>"+$str;
-               echo "<table>
-               <caption>
-                       <p>Tutti prodotti</p>
-               </caption>
-               <thead>
-               <tr><th>id </th> <th>nome</th><th>descrizione</th><th>costo</th></tr>
-               </thead>
-               <tbody>
-               "$str"
-               </tbody>
-               </table>"
-            }
+    $sql="SELECT * FROM Prodotto";
+    $result = mysqli_query($conn,$sql);
+    if ($result->num_rows > 0) {
+        echo "<table>";
+        echo "<thead><tr><th>ID</th><th>Nome</th><th>Descrizione</th><th>Prezzo</th></tr></thead>";
+        echo "<tbody>";
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["nome"] . "</td><td>" . $row["descrizione"] . "</td><td>" . $row["costo"] . "</td></tr>";
         }
+        echo "</tbody>";
+        echo "</table>";
+    } else {
+        echo "0 results";
     }
+    mysqli_close($conn);
 };
-
 ?>
